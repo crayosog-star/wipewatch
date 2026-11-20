@@ -54,7 +54,13 @@
 
 ## Get it
 
-Build the Windows installer yourself (nothing is downloaded, it uses the tools already on Windows):
+<p align="center">
+  <a href="https://github.com/crayosog-star/wipewatch/releases/latest/download/Wipewatch-Solo-Setup-1.4.0.exe"><img alt="Download Wipewatch Solo for Windows" src="https://img.shields.io/badge/Download-Wipewatch%20Solo%201.4.0%20for%20Windows-ff5a4a?style=for-the-badge&logo=windows&logoColor=white"></a>
+</p>
+
+**Wipewatch Solo** is available as a ready-made installer on the [Releases page](https://github.com/crayosog-star/wipewatch/releases/latest): Windows 10/11, per-user install, no admin rights. It is not code-signed, so SmartScreen may ask you to confirm ("More info" then "Run anyway"); the release notes list the SHA-256 checksum to verify your download.
+
+You can also build the installers yourself (nothing is downloaded, it uses the tools already on Windows):
 
 ```powershell
 git clone https://github.com/crayosog-star/wipewatch.git
