@@ -22,7 +22,7 @@ const exe = path.join(out, 'Wipewatch.exe');
 
   const app = path.join(out, 'resources', 'app');
   fs.mkdirSync(app, { recursive: true });
-  fs.cpSync(path.join(root, 'src'), path.join(app, 'src'), { recursive: true });
+  fs.cpSync(path.join(root, 'src'), path.join(app, 'src'), { recursive: true, filter: (src) => !/[\\/]demo\.js$/.test(src) });   // demo.js is a development tool (README screenshots), not shipped
   fs.cpSync(path.join(root, 'assets'), path.join(app, 'assets'), { recursive: true });
   if (!SOLO) fs.cpSync(path.join(root, 'server'), path.join(app, 'server'), { recursive: true, filter: (src) => !/[\\/]data([\\/]|$)/.test(src) });   // the friends/clans server, so it can be hosted from an install
   else {   // Solo edition: take the whole social feature out of the shipped files

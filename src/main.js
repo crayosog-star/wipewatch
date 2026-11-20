@@ -1213,6 +1213,12 @@ app.whenReady().then(async () => {
     // headless self-test: wait for UI, dump what it rendered, exit
     if (win.webContents.isLoading()) await new Promise((r) => win.webContents.once('did-finish-load', r));
     await sleep(2000);
+    if (process.env.RDT_DEMO) {   // README screenshots + demo animation (see src/demo.js)
+      const { createServer } = require('../server/server'); const { SocialClient } = require('./social-client');
+      await require('./demo')({ win, data, rt, push, sleep, serverCache, servers, outDir: process.env.RDT_SHOTS || path.join(app.getPath('temp'), 'wipewatch-demo'), getNews: () => newsItems.length, SocialClient,
+        startSocialServer: async () => { const srv = createServer({ dataDir: fs.mkdtempSync(path.join(app.getPath('temp'), 'ww-demo-srv-')) }); await new Promise((r) => srv.listen(0, '127.0.0.1', r)); return { base: 'http://127.0.0.1:' + srv.address().port, srv }; } });
+      quitting = true; app.exit(0); return;
+    }
     if (REAL) {
       // real run: wait for the real Steam inventory + a few prices to load
       for (let i = 0; i < 60 && !(data.steam.inventory.length && Object.keys(data.prices).length >= 6); i++) await sleep(1000);

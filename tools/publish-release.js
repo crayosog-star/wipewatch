@@ -14,6 +14,7 @@ const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'))
 const tag = 'v' + pkg.version;
 const names = SOLO_ONLY ? [`Wipewatch-Solo-Setup-${pkg.version}.exe`] : [`Wipewatch-Setup-${pkg.version}.exe`, `Wipewatch-Solo-Setup-${pkg.version}.exe`];
 const files = names.map((n) => path.join(root, 'dist', n));
+const assetName = (f) => path.basename(f).replace(`-${pkg.version}`, '');   // stable names so releases/latest/download/<name> never changes
 for (const f of files) if (!fs.existsSync(f)) { console.error('Missing ' + f); process.exit(1); }
 
 const out = execFileSync('git', ['credential', 'fill'], { input: 'protocol=https\nhost=github.com\n\n', encoding: 'utf8' });
@@ -22,7 +23,7 @@ const headers = { Authorization: 'Bearer ' + cred.password, 'User-Agent': 'wipew
 const sha = (f) => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
 
 (async () => {
-  const sums = files.map((f) => `${sha(f)}  ${path.basename(f)}`);
+  const sums = files.map((f) => `${sha(f)}  ${assetName(f)}`);
   const body = [
     `## Wipewatch ${pkg.version}${SOLO_ONLY ? ' (Solo edition)' : ''}`, '',
     'Windows 10/11 installer. Per-user install (no admin rights), Start Menu and Desktop shortcuts, uninstaller included.', '',
@@ -36,8 +37,8 @@ const sha = (f) => crypto.createHash('sha256').update(fs.readFileSync(f)).digest
   if (!r.ok) { console.error('create release failed', r.status, (await r.text()).slice(0, 300)); process.exit(1); }
   const rel = await r.json(); console.log('release created:', rel.html_url);
   for (const f of files) {
-    const buf = fs.readFileSync(f); console.log('uploading', path.basename(f), Math.round(buf.length / 1048576) + ' MB ...');
-    const up = await fetch(`https://uploads.github.com/repos/${repo}/releases/${rel.id}/assets?name=${encodeURIComponent(path.basename(f))}`, { method: 'POST', headers: { ...headers, 'Content-Type': 'application/octet-stream', 'Content-Length': String(buf.length) }, body: buf });
+    const buf = fs.readFileSync(f); console.log('uploading', assetName(f), Math.round(buf.length / 1048576) + ' MB ...');
+    const up = await fetch(`https://uploads.github.com/repos/${repo}/releases/${rel.id}/assets?name=${encodeURIComponent(assetName(f))}`, { method: 'POST', headers: { ...headers, 'Content-Type': 'application/octet-stream', 'Content-Length': String(buf.length) }, body: buf });
     if (!up.ok) { console.error('upload failed', up.status, (await up.text()).slice(0, 300)); process.exit(1); }
     const a = await up.json(); console.log('  ->', a.browser_download_url, `(${a.state})`);
   }
