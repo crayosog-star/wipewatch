@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wipewatch</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-src https:;">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="intro" aria-hidden="true">
+  <div class="in-glow"></div>
+  <div class="in-streaks"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="in-drop">
+    <svg viewBox="0 0 256 256" width="210" height="210">
+      <defs><linearGradient id="inchute" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ffd2b8"/></linearGradient></defs>
+      <g class="in-chute">
+        <path d="M42 120 C42 70 80 38 128 38 C176 38 214 70 214 120 Q192 104 171 120 Q150 104 128 120 Q106 104 85 120 Q64 104 42 120 Z" fill="url(#inchute)"/>
+        <path d="M128 38 C107 60 98 92 85 120 M128 38 C149 60 158 92 171 120 M128 38 V120" stroke="#ff5a4a" stroke-opacity=".4" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M42 120 L106 178 M85 120 L114 178 M128 120 V178 M171 120 L142 178 M214 120 L150 178" stroke="#fff" stroke-opacity=".9" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </g>
+      <g class="in-crate"><rect x="100" y="176" width="56" height="48" rx="9" fill="#171b27"/><path d="M100 200h56M128 176v48" stroke="#ff9a5c" stroke-width="5"/><rect x="100" y="176" width="56" height="48" rx="9" fill="none" stroke="#ff9a5c" stroke-width="4"/></g>
+    </svg>
+  </div>
+  <div class="in-ring"></div><div class="in-ring r2"></div>
+  <div class="in-flash"></div>
+  <div class="in-sparks"></div>
+  <div class="in-logo"><img src="../assets/icon-256.png" alt="" width="132" height="132"></div>
+  <div class="in-title"><b>Wipewatch</b><span>Your Rust companion</span></div>
+</div>
+<div class="app">
+
+  <aside class="side">
+    <div class="brand">
+      <img class="logo-img" src="../assets/icon-256.png" alt="" width="40" height="40">
+      <div class="brand-text"><b>Wipewatch</b><span>Your Rust companion</span></div>
+    </div>
+
+    <nav>
+      <button data-tab="home" class="on"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg><span>Home</span></button>
+      <button data-tab="drops"><svg viewBox="0 0 24 24"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg><span>Drops</span></button>
+      <button data-tab="watch"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M10 9l5 3-5 3zM8 22h8"/></svg><span>Watch</span></button>
+      <button data-tab="skins"><svg viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg><span>Skins</span></button>
+      <button data-tab="servers"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg><span>Servers</span></button>
+      <button data-tab="friends"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.7a3.5 3.5 0 010 6.6M18.5 14.4c1.8.8 3 2.6 3 5.6"/></svg><span>Friends</span><i id="friends-badge" class="nbadge" hidden></i></button>
+      <button data-tab="clan"><svg viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/></svg><span>Clan</span><i id="clan-badge" class="nbadge" hidden></i></button>
+      <button data-tab="builds"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-6 7 6v11M9 21v-6h6v6"/></svg><span>Build Ideas</span></button>
+      <button data-tab="planner"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg><span>Wipe Planner</span></button>
+      <button data-tab="news"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h2"/></svg><span>Patch Notes</span><i id="news-badge" class="nbadge" hidden></i></button>
+      <button data-tab="raid"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h8"/></svg><span>Raid Calc</span></button>
+      <button data-tab="calendar"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Calendar</span></button>
+      <button data-tab="stats"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span>My Stats</span></button>
+      <button data-tab="history"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>History</span></button>
+      <button data-tab="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg><span>Settings</span></button>
+    </nav>
+
+    <div class="side-foot">
+      <div class="status"><i class="sdot" id="dot-poll"></i><span id="pollinfo">Checking...</span></div>
+      <div class="status"><i class="sdot" id="dot-steam"></i><span id="st-steam">Steam: not linked</span></div>
+      <div class="status"><i class="sdot" id="dot-twitch"></i><span id="st-twitch">Twitch: not linked</span></div>
+      <button id="refresh" class="btn block">Check for drops now</button>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <!-- ============ HOME ============ -->
+    <section id="tab-home">
+      <div class="page-head">
+        <div><h1 id="hm-greet">Welcome</h1><p id="hm-sub"></p></div>
+        <div class="row"><button class="btn ghost" data-jump="servers">Find a server</button><button class="btn" data-jump="watch">Start watching</button></div>
+      </div>
+      <div id="hm-tiles" class="tiles"></div>
+      <div class="home-cols">
+        <div id="hm-live"></div>
+        <div id="hm-side"></div>
+      </div>
+    </section>
+
+    <!-- ============ DROPS ============ -->
+    <section id="tab-drops" hidden>
+      <div class="page-head">
+        <div><h1>Drops</h1><p>What is live on Kick and Twitch right now.</p></div>
+      </div>
+      <div id="banners"></div>
+      <div id="drops-hero" class="hero"></div>
+      <div id="drops-live"></div>
+      <div id="twitch-status" class="note" hidden></div>
+      <details class="card add" id="drops-tracked">
+        <summary id="tracked-summary">Track a Twitch drop</summary>
+        <div id="twitch-list"></div>
+        <p class="muted">Twitch has no public drops list. Copy a reward from the Facepunch page or twitch.tv/drops/campaigns and the app will count your watch time on it.</p>
+        <div class="row"><input id="cd-name" placeholder="Reward name, e.g. Garage Door"><input id="cd-min" type="number" min="1" placeholder="Minutes" class="narrow"></div>
+        <div class="row"><input id="cd-camp" placeholder="Campaign name (optional)"><button id="cd-add" class="btn">Add drop</button></div>
+      </details>
+    </section>
+
+    <!-- ============ WATCH ============ -->
+    <section id="tab-watch" hidden>
+      <div class="page-head tight">
+        <div><h1>Watch</h1><p>Watch a stream here and the app counts your time toward the drops you pick.</p></div>
+      </div>
+      <div class="watchbar">
+        <div class="row">
+          <button class="btn ghost" data-go="https://kick.com/category/rust">Kick: Rust</button>
+          <button class="btn ghost" data-go="https://www.twitch.tv/directory/category/rust?tl=c2542d6d-cd10-4532-919b-3d19f30a768b">Twitch: Drops Enabled</button>
+          <input id="w-url" placeholder="Paste a kick.com or twitch.tv link">
+          <button id="w-go" class="btn ghost">Go</button>
+        </div>
+        <div class="row">
+          <span id="w-status" class="muted grow">Not counting</span>
+          <button id="w-toggle" class="btn">Start counting</button>
+        </div>
+        <div id="w-targets" class="targets"></div>
+        <div id="w-suggest" class="targets"></div>
+      </div>
+      <webview id="player" src="about:blank" partition="persist:watch"></webview>
+    </section>
+
+    <!-- ============ SKINS ============ -->
+    <section id="tab-skins" hidden>
+      <div class="page-head">
+        <div><h1>Skins</h1><p>Your Rust inventory with live Steam Market prices.</p></div>
+        <div class="row">
+          <input id="sk-search" placeholder="Search skins" class="search">
+          <select id="sk-sort">
+            <option value="value">Total value</option>
+            <option value="each">Price each</option>
+            <option value="name">Name</option>
+            <option value="count">Quantity</option>
+            <option value="change">24h change</option>
+          </select>
+          <button id="sk-refresh" class="btn ghost">Refresh prices</button>
+          <button id="sk-export" class="btn ghost">Export CSV</button>
+        </div>
+      </div>
+
+      <div id="sk-empty" class="empty" hidden>
+        <div class="empty-ico"><svg viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></div>
+        <h3>Link your Steam account</h3>
+        <p id="sk-empty-msg" class="muted">The app can find the Steam account signed in on this PC and load your Rust inventory.</p>
+        <div class="row center"><button id="sk-detect" class="btn">Find my Steam account</button></div>
+      </div>
+
+      <div id="sk-main">
+        <div class="hero">
+          <div class="hero-main">
+            <div class="muted">Estimated inventory value</div>
+            <div id="sk-total" class="hero-num">-</div>
+            <div class="muted" id="sk-sub"></div>
+            <div class="muted" id="sk-net" title="Steam keeps about 13% of every market sale (5% Steam + 10% Rust)"></div>
+            <div class="muted" id="sk-pl"></div>
+            <div class="muted" id="sk-movers"></div>
+          </div>
+          <div id="sk-chart" class="chart"></div>
+          <div class="hero-stats">
+            <div><b id="sk-count">0</b><span>Items</span></div>
+            <div><b id="sk-unique">0</b><span>Unique</span></div>
+            <div><b id="sk-priced">0</b><span>Priced</span></div>
+          </div>
+        </div>
+        <div id="sk-note" class="note slim" hidden></div>
+        <div id="sk-grid" class="skgrid"></div>
+      </div>
+      <div id="sk-watch"></div>
+    </section>
+
+    <!-- ============ SERVERS ============ -->
+    <section id="tab-servers" hidden>
+      <div class="page-head">
+        <div><h1>Servers</h1><p>Live player counts, queue length and the map for the current wipe.</p></div>
+        <div class="row"><span id="sv-updated" class="muted"></span><button id="sv-refresh" class="btn ghost">Refresh</button></div>
+      </div>
+
+      <div id="sv-nokey" class="empty" hidden>
+        <div class="empty-ico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg></div>
+        <h3>One-time setup: a free Steam Web API key</h3>
+        <p class="muted">Steam's official server list needs a key. It is free and takes a minute. The key stays on this PC and is only sent to Steam.</p>
+        <ol class="steps left">
+          <li>Click <b>Get my Steam API key</b> and sign in to Steam.</li>
+          <li>For <b>Domain Name</b> type anything (e.g. <b>localhost</b>), tick the agreement and click <b>Register</b>.</li>
+          <li>Copy the <b>Key</b> shown on that page and paste it below.</li>
+        </ol>
+        <div class="row center"><button id="sv-getkey" class="btn ghost">Get my Steam API key</button></div>
+        <div class="row center keyrow"><input id="sv-key" type="password" placeholder="Paste your Steam Web API key"><button id="sv-savekey" class="btn">Save key</button></div>
+        <div id="sv-keyerr" class="muted"></div>
+      </div>
+
+      <div id="sv-main">
+        <div id="sv-friends" class="friends" hidden></div>
+        <div class="sv-filters">
+          <input id="sv-search" placeholder="Search server name" class="search">
+          <select id="sv-region"><option value="">All regions</option></select>
+          <select id="sv-mods"><option value="">Vanilla + modded</option><option value="vanilla">Vanilla only</option><option value="modded">Modded only</option></select>
+          <select id="sv-mode"><option value="">PvP + PvE</option><option value="pvp">PvP only</option><option value="pve">PvE only</option></select>
+          <input id="sv-min" type="number" min="0" placeholder="Min players" class="narrow">
+          <select id="sv-sort"><option value="players">Most players</option><option value="queue">Longest queue</option><option value="wipe">Newest wipe</option><option value="name">Name</option></select>
+          <label class="chk"><input id="sv-queue" type="checkbox"> Has queue</label>
+          <label class="chk"><input id="sv-fav" type="checkbox"> Favourites</label>
+        </div>
+        <div id="sv-status" class="muted" style="margin:6px 2px 12px"></div>
+        <div class="sv-layout">
+          <div class="sv-list">
+            <div class="sv-head"><span></span><span>Server</span><span>Players</span><span>Queue</span></div>
+            <div id="sv-rows"></div>
+          </div>
+          <aside id="sv-detail" class="sv-detail"><div class="empty"><h3>Pick a server</h3><p class="muted">Click any server to see its live queue and the map for this wipe.</p></div></aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PATCH NOTES ============ -->
+    <section id="tab-news" hidden>
+      <div class="page-head">
+        <div><h1>Patch Notes</h1><p>Official Rust updates and news, straight from Steam.</p></div>
+        <div class="row">
+          <div class="seg">
+            <label><input type="radio" name="nf" value="official" checked><span>Official updates</span></label>
+            <label><input type="radio" name="nf" value="press"><span>News &amp; press</span></label>
+          </div>
+          <button id="news-readall" class="btn ghost">Mark all read</button>
+        </div>
+      </div>
+      <div id="next-update" class="countdown"></div>
+      <div class="news-layout">
+        <div id="news-list" class="news-list"></div>
+        <article id="news-reader" class="reader"><div class="empty"><h3>Pick an update to read</h3><p class="muted">Full patch notes open here.</p></div></article>
+      </div>
+    </section>
+
+    <!-- ============ FRIENDS ============ -->
+    <section id="tab-friends" hidden>
+      <div class="page-head">
+        <div><h1>Friends</h1><p>Add friends and see what they choose to share: skin value, recent servers and activity.</p></div>
+        <div class="row"><button id="fr-refresh" class="btn ghost">Refresh</button></div>
+      </div>
+      <div id="fr-body"></div>
+    </section>
+
+    <!-- ============ CLAN ============ -->
+    <section id="tab-clan" hidden>
+      <div class="page-head">
+        <div><h1>Clan</h1><p>Start a clan, invite your friends, and see how your whole crew is doing.</p></div>
+        <div class="row"><button id="cl-refresh" class="btn ghost">Refresh</button></div>
+      </div>
+      <div id="cl-body"></div>
+    </section>
+
+    <!-- ============ BUILD IDEAS ============ -->
+    <section id="tab-builds" hidden>
+      <div class="page-head">
+        <div><h1>Build Ideas</h1><p>Recent, popular Rust base-build videos from the channels you follow, ranked by views for their age.</p></div>
+        <div class="row"><input id="bd-search" placeholder="Search builds" class="search"><select id="bd-sort"><option value="hot">Hot</option><option value="new">Newest</option><option value="views">Most viewed</option></select><button id="bd-refresh" class="btn ghost">Refresh</button></div>
+      </div>
+      <div id="bd-chips" class="chips"></div>
+      <div id="bd-note"></div>
+      <div id="bd-grid" class="bdgrid"></div>
+      <div class="card form" id="bd-sources"></div>
+    </section>
+
+    <!-- ============ WIPE PLANNER ============ -->
+    <section id="tab-planner" hidden>
+      <div class="page-head">
+        <div><h1>Wipe Planner</h1><p>Your wipe-day checklist, notes and base locations. The checklist resets itself every force wipe.</p></div>
+        <div class="row"><button id="pl-reset" class="btn ghost">Uncheck everything</button></div>
+      </div>
+      <div id="pl-wipe" class="hero"></div>
+      <div class="pl-cols">
+        <div class="card form"><h3>Wipe-day checklist</h3><div id="pl-list"></div><div class="row"><input id="pl-new" placeholder="Add a step (e.g. Farm 2k sulfur)" class="grow"><button id="pl-add" class="btn ghost">Add</button></div></div>
+        <div class="card form"><h3>Notes for this wipe</h3><textarea id="pl-notes" rows="9" placeholder="Server, teammates, base plan, codes you want to remember..."></textarea><div class="muted">Saved automatically and kept in your backups.</div></div>
+      </div>
+      <div class="card form"><h3>Base pins</h3><p class="muted">Drop pins on a server's map (Servers page, open a server, then <b>Pin a base</b>). Pins are kept per map, so each wipe starts clean.</p><div id="pl-pins"></div></div>
+    </section>
+
+    <!-- ============ RAID CALCULATOR ============ -->
+    <section id="tab-raid" hidden>
+      <div class="page-head">
+        <div><h1>Raid Calculator</h1><p>How many explosives, and how much sulfur, a raid costs.</p></div>
+        <div class="row"><button id="rd-clear" class="btn ghost">Clear</button><button id="rd-edit" class="btn ghost">Edit numbers</button></div>
+      </div>
+      <div class="banner"><div>These are community figures entered from memory and <b>not checked against the current patch</b>. Numbers marked <b>~</b> are less certain. Check anything important in game, and use <b>Edit numbers</b> to correct a value; your changes are saved.</div></div>
+      <div class="rd-layout">
+        <div>
+          <div class="card rd-tablecard"><div id="rd-table" class="rd-table"></div>
+            <div class="row" style="margin-top:10px"><button id="rd-addrow" class="btn ghost sm" hidden>+ Add a target</button><button id="rd-reset" class="btn ghost sm" hidden>Reset to defaults</button></div>
+          </div>
+          <div class="card"><h3>Explosive cost (sulfur each)</h3><div id="rd-costs" class="rd-costs"></div></div>
+        </div>
+        <aside class="card rd-side"><h3>Raid cost</h3><div id="rd-results"></div>
+          <p class="muted" style="margin-top:12px">Counts assume full-health targets hit directly with a single explosive type. Real raids vary with damage falloff, soft or hard side, deployables and repairs. Sulfur is the raw sulfur cost of crafting each explosive.</p></aside>
+      </div>
+    </section>
+
+    <!-- ============ CALENDAR ============ -->
+    <section id="tab-calendar" hidden>
+      <div class="page-head">
+        <div><h1>Calendar</h1><p>Monthly wipes, Rust updates and drop campaigns in one place.</p></div>
+        <div class="row"><button id="cal-prev" class="btn ghost">&#8249;</button><b id="cal-title" class="cal-title"></b><button id="cal-next" class="btn ghost">&#8250;</button><button id="cal-today" class="btn ghost">Today</button></div>
+      </div>
+      <div class="cal-legend"><span><i class="ld wipe"></i>Force wipe</span><span><i class="ld update"></i>Rust update</span><span><i class="ld kick"></i>Kick drops</span></div>
+      <div id="cal-grid" class="cal-grid"></div>
+      <div id="cal-day" class="card cal-day"></div>
+    </section>
+
+    <!-- ============ MY STATS ============ -->
+    <section id="tab-stats" hidden>
+      <div class="page-head">
+        <div><h1>My Stats</h1><p>Your Rust playtime and the stats Steam keeps for you.</p></div>
+        <div class="row"><input id="st-search" placeholder="Search stats" class="search"><button id="st-refresh" class="btn ghost">Refresh</button></div>
+      </div>
+      <div id="st-notice"></div>
+      <div id="st-profile" class="statprofile"></div>
+      <div id="st-tiles" class="tiles"></div>
+      <div id="st-grid" class="statgrid"></div>
+    </section>
+
+    <!-- ============ HISTORY ============ -->
+    <section id="tab-history" hidden>
+      <div class="page-head">
+        <div><h1>History</h1><p>Claims, ready-to-claim moments, price alerts and new updates.</p></div>
+        <div class="row"><button id="log-export" class="btn ghost">Export CSV</button><button id="log-clear" class="btn ghost">Clear history</button></div>
+      </div>
+      <div id="hist-tiles" class="tiles"></div>
+      <div id="hist-list" class="timeline"></div>
+    </section>
+
+    <!-- ============ SETTINGS ============ -->
+    <section id="tab-settings" hidden>
+      <div class="page-head">
+        <div><h1>Settings</h1><p>Accounts, notifications and startup.</p></div>
+        <div class="row"><span id="s-saved" class="muted"></span><button id="s-save" class="btn">Save changes</button></div>
+      </div>
+
+      <div class="set-grid">
+        <div class="card form about">
+          <div class="about-head"><img src="../assets/icon-256.png" alt="" width="52" height="52"><div><h3>Wipewatch</h3><div id="ab-version" class="muted"></div></div></div>
+          <p class="muted">Your Rust companion: drops, skins, servers, patch notes and raid costs. Not affiliated with Facepunch Studios, Valve, Twitch or Kick.</p>
+          <div id="ab-path" class="muted" style="overflow-wrap:anywhere"></div>
+          <div class="row"><button id="ab-open" class="btn ghost sm">Open data folder</button><button id="ab-export" class="btn ghost sm">Back up settings</button><button id="ab-import" class="btn ghost sm">Restore backup</button></div>
+          <div class="muted">Backups never include your Discord webhook, Steam key or Twitch login.</div>
+          <div class="keys"><span><kbd>Ctrl</kbd>+<kbd>K</kbd> command palette</span><span><kbd>Ctrl</kbd>+<kbd>1-9</kbd> switch page</span><span><kbd>Ctrl</kbd>+<kbd>R</kbd> check for drops</span><span><kbd>/</kbd> search this page</span></div>
+        </div>
+        <div class="card form">
+          <h3>Steam</h3>
+          <p class="muted">Used to show your skins and mark drops as claimed. Your Steam inventory must be set to <b>Public</b>.</p>
+          <label>Detected on this PC
+            <select id="s-steam-acct"></select>
+          </label>
+          <label>Or paste a profile link / Steam ID
+            <input id="s-steam" placeholder="https://steamcommunity.com/id/yourname">
+          </label>
+          <label>Price currency <select id="s-cur"></select></label>
+          <label>Steam Web API key (for the Servers tab) <input id="s-apikey" type="password" placeholder="Free key from steamcommunity.com/dev/apikey"></label>
+          <div class="row"><button id="s-steam-detect" class="btn ghost">Detect from this PC</button><button id="s-steam-check" class="btn ghost">Reload inventory</button></div>
+          <div id="s-steam-status" class="muted"></div>
+        </div>
+
+        <div class="card form">
+          <h3>Twitch</h3>
+          <p class="muted">Twitch needs a one-time setup (free, about 2 minutes). Without it the app can't see which Rust streams have drops live.</p>
+          <ol class="steps">
+            <li>Click <b>Open Twitch developer console</b> and log in.</li>
+            <li>Register an application: Name <b>anything</b> (e.g. Wipewatch), OAuth Redirect URL <b>http://localhost</b>, Category <b>Application Integration</b>, Client Type <b>Public</b>.</li>
+            <li>Click <b>Manage</b> on the new app and copy the <b>Client ID</b> (it is not a secret).</li>
+            <li>Paste it below, click <b>Save changes</b>, then <b>Link Twitch</b> and enter the code on the Twitch page that opens.</li>
+          </ol>
+          <div class="row"><button id="s-twitch-console" class="btn ghost">Open Twitch developer console</button></div>
+          <label>Client ID <input id="s-cid" placeholder="Paste your Twitch Client ID here"></label>
+          <div class="row"><button id="s-link" class="btn ghost">Link Twitch</button><button id="s-unlink" class="btn ghost">Unlink</button></div>
+          <div id="s-twitch" class="muted"></div>
+          <div id="s-code" class="code" hidden></div>
+        </div>
+
+        <div class="card form">
+          <h3>Notifications</h3>
+          <label>Discord webhook URL <input id="s-webhook" type="password" placeholder="https://discord.com/api/webhooks/..."></label>
+          <label>Role ID to ping (optional) <input id="s-role" placeholder="123456789012345678"></label>
+          <label class="switch-row"><span>Windows notifications</span><span class="switch"><input id="s-toast" type="checkbox"><i></i></span></label>
+          <label class="switch-row"><span>Alert me when a new Rust update is released</span><span class="switch"><input id="s-patch" type="checkbox"><i></i></span></label>
+          <label class="switch-row"><span>Alert me when any server I starred wipes (click the pop-up to join)</span><span class="switch"><input id="s-wipefav" type="checkbox"><i></i></span></label>
+          <label class="switch-row"><span>Alert me when a Steam friend starts playing Rust (this PC only)</span><span class="switch"><input id="s-friends" type="checkbox"><i></i></span></label>
+          <label class="switch-row"><span>Quiet hours (mute Windows pop-ups; Discord still posts)</span><span class="switch"><input id="s-quiet" type="checkbox"><i></i></span></label>
+          <div class="row"><label style="flex-direction:row;align-items:center;gap:8px">From <input id="s-qstart" type="time"></label><label style="flex-direction:row;align-items:center;gap:8px">To <input id="s-qend" type="time"></label></div>
+          <label>Check for drops every (seconds) <input id="s-poll" type="number" min="60" class="narrow"></label>
+          <div class="row"><button id="s-test" class="btn ghost">Send test notification</button></div>
+        </div>
+
+        <div class="card form">
+          <h3>Sound and overlay</h3>
+          <label>Alert sound <select id="s-sound"><option value="airdrop">Airdrop incoming</option><option value="chime">Soft chime</option><option value="radar">Radar ping</option><option value="off">Off</option></select></label>
+          <label>Volume <input id="s-vol" type="range" min="0" max="100" step="5"></label>
+          <div class="row"><button id="s-sound-test" class="btn ghost">Play sound</button></div>
+          <label class="switch-row"><span>Mini overlay (always on top: wipe countdown, skins, favourite servers)</span><span class="switch"><input id="s-overlay" type="checkbox"><i></i></span></label>
+          <label class="switch-row"><span>Overlay click-through (can't be moved while on)</span><span class="switch"><input id="s-olock" type="checkbox"><i></i></span></label>
+          <label>Overlay opacity <input id="s-oop" type="range" min="40" max="100" step="5"></label>
+          <label class="switch-row"><span>Alert me when a popular new base-build video appears</span><span class="switch"><input id="s-balert" type="checkbox"><i></i></span></label>
+        </div>
+
+        <div class="card form">
+          <h3>Updates</h3>
+          <p class="muted">Wipewatch can check a GitHub repository's releases for a newer version. It only tells you and opens the download page; it never installs anything by itself.</p>
+          <div id="up-banner"></div>
+          <label>GitHub repository (owner/name) <input id="s-repo" placeholder="e.g. yourname/wipewatch"></label>
+          <div class="row"><button id="up-check" class="btn ghost">Check for updates</button><span id="up-status" class="muted"></span></div>
+        </div>
+
+        <div class="card form">
+          <h3>General</h3>
+          <label><input type="checkbox" id="s-intro" checked> Launch animation</label>
+          <label>Theme<select id="s-theme"><option value="dark">Dark</option><option value="light">Light</option><option value="system">Match Windows</option></select></label>
+          <label class="switch-row"><span>Start with Windows (minimised to tray)</span><span class="switch"><input id="s-auto" type="checkbox"><i></i></span></label>
+          <p class="muted">Closing the window keeps the app running in the tray so alerts keep coming. Quit from the tray icon.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+<script src="app.js"></script>
+<script src="raid.js"></script>
+<script src="home.js"></script>
+<script src="extras.js"></script>
+<script src="social-ui.js"></script>
+<script src="ui.js"></script>
+<script src="intro.js"></script>
+</body>
+</html>

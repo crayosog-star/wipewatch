@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff9a3d"/>
+      <stop offset="1" stop-color="#ff3d6e"/>
+    </linearGradient>
+    <linearGradient id="chute" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#ffe2d2"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".28"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="58" fill="url(#bg)"/>
+  <rect width="256" height="256" rx="58" fill="url(#shine)"/>
+  <!-- parachute canopy -->
+  <path d="M42 120 C42 70 80 38 128 38 C176 38 214 70 214 120 Q192 104 171 120 Q150 104 128 120 Q106 104 85 120 Q64 104 42 120 Z" fill="url(#chute)"/>
+  <path d="M128 38 C107 60 98 92 85 120 M128 38 C149 60 158 92 171 120 M128 38 V120" stroke="#ff5a4a" stroke-opacity=".38" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- suspension lines -->
+  <path d="M42 120 L106 178 M85 120 L114 178 M128 120 V178 M171 120 L142 178 M214 120 L150 178" stroke="#ffffff" stroke-opacity=".9" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- supply crate -->
+  <rect x="100" y="176" width="56" height="48" rx="9" fill="#171b27"/>
+  <path d="M100 200h56M128 176v48" stroke="#ff9a5c" stroke-width="5"/>
+  <rect x="100" y="176" width="56" height="48" rx="9" fill="none" stroke="#ff9a5c" stroke-width="4"/>
+</svg>

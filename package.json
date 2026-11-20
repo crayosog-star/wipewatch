@@ -1,0 +1,22 @@
+{
+  "name": "wipewatch",
+  "productName": "Wipewatch",
+  "version": "1.4.0",
+  "description": "Wipewatch - your Rust companion: drops, skins, servers, patch notes and raid costs",
+  "main": "src/main.js",
+  "author": "Wipewatch",
+  "scripts": {
+    "start": "electron .",
+    "smoke": "electron . --smoke",
+    "server": "node server/server.js",
+    "test:social": "node tests/social-test.js",
+    "installer": "node tools/package.js && node tools/make-installer.js",
+    "installer:solo": "node tools/package.js --solo && node tools/make-installer.js --solo"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "electron": "^45.2.3",
+    "rcedit": "^5.0.2"
+  }
+}
